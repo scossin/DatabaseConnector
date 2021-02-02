@@ -35,8 +35,9 @@
 }
 
 .createErrorReport <- function(dbms, message, sql, fileName) {
-  report <- c("DBMS:\n", dbms, "\n\nError:\n", message, "\n\nSQL:\n", sql, "\n\n", .systemInfo())
-  fileConn <- file(fileName)
+  report <- c("\n ------------- ERROR REPORT  ", as.character(Sys.time()), "  -----\n", 
+    "DBMS:\n", dbms, "\n\nError:\n", message, "\n\nSQL:\n", sql, "\n\n", .systemInfo())
+  fileConn <- file(fileName, open="a")
   writeChar(report, fileConn, eos = NULL)
   close(fileConn)
   abort(paste("Error executing SQL:",
